@@ -1,0 +1,70 @@
+const anniversaryDate = new Date("2020-01-01");
+        
+        // Calculate years together
+        const today = new Date();
+        const yearsTogether = today.getFullYear() - anniversaryDate.getFullYear();
+        document.getElementById("years-together").textContent = yearsTogether;
+        
+        // Countdown function
+        function updateCountdown() {
+            const now = new Date();
+            const nextAnniversary = new Date(anniversaryDate);
+            nextAnniversary.setFullYear(now.getFullYear());
+            
+            if (now > nextAnniversary) {
+                nextAnniversary.setFullYear(now.getFullYear() + 1);
+            }
+            
+            const diff = nextAnniversary - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById("countdown").innerHTML = 
+                Next Anniversary In:<br>
+                ${days} Days ${hours} Hours<br>
+                ${minutes} Minutes ${seconds} Seconds
+            ;
+        }
+        
+        // Update every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Button messages
+        function showMessage(type) {
+            let message = "";
+            switch(type) {
+                case 1:
+                    message = "ကျွန်တော်တို့ပထမဆုံးတွေ့တုန်းက မင်းရဲ့ပြုံးနေတဲ့မျက်နှာလေးကို ဘယ်တော့မှမေ့မှာမဟုတ်ဘူး...";
+                    break;
+                case 2:
+                    message = "မင်းရဲ့ရိုးသားမှု၊ စာနာမှု၊ ပြုံးနေတတ်တဲ့မျက်နှာလေးတွေက ကျွန်တော့်ကိုဆွဲဆောင်သွားတာ...";
+                    break;
+                case 3:
+                    message = "မင်းကိုချစ်တယ်... ဒီထက်ပိုပြီးချစ်မယ်... ဘယ်တော့မှမပြောင်းလဲဘူး...";
+                    break;
+            }
+            alert(message);
+        }
+        
+        // Music control
+        function toggleMusic() {
+            const music = document.getElementById("bgMusic");
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+        
+        // Autoplay music with user interaction
+        document.addEventListener('click', function() {
+            const music = document.getElementById("bgMusic");
+            music.play().catch(e => console.log("Auto-play prevented"));
+        }, { once: true });
+    </script>
+</body>
+</html>
