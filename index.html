@@ -1,70 +1,127 @@
-const anniversaryDate = new Date("2022-06-04");
-        
-        // Calculate years together
-        const today = new Date();
-        const yearsTogether = today.getFullYear() - anniversaryDate.getFullYear();
-        document.getElementById("years-together").textContent = yearsTogether;
-        
-        // Countdown function
-        function updateCountdown() {
-            const now = new Date();
-            const nextAnniversary = new Date(anniversaryDate);
-            nextAnniversary.setFullYear(now.getFullYear());
-            
-            if (now > nextAnniversary) {
-                nextAnniversary.setFullYear(now.getFullYear() + 1);
-            }
-            
-            const diff = nextAnniversary - now;
-            
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById("countdown").innerHTML = 
-                Next Anniversary In:<br>
-                ${days} Days ${hours} Hours<br>
-                ${minutes} Minutes ${seconds} Seconds
-            ;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Special Anniversary</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #fff;
+            text-align: center;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         
-        // Update every second
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-        
-        // Button messages
-        function showMessage(type) {
-            let message = "";
-            switch(type) {
-                case 1:
-                    message = "ကျွန်တော်တို့ပထမဆုံးတွေ့တုန်းက မင်းရဲ့ပြုံးနေတဲ့မျက်နှာလေးကို ဘယ်တော့မှမေ့မှာမဟုတ်ဘူး...";
-                    break;
-                case 2:
-                    message = "မင်းရဲ့ရိုးသားမှု၊ စာနာမှု၊ ပြုံးနေတတ်တဲ့မျက်နှာလေးတွေက ကျွန်တော့်ကိုဆွဲဆောင်သွားတာ...";
-                    break;
-                case 3:
-                    message = "မင်းကိုချစ်တယ်... ဒီထက်ပိုပြီးချစ်မယ်... ဘယ်တော့မှမပြောင်းလဲဘူး...";
-                    break;
-            }
-            alert(message);
+        .container {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 90%;
         }
         
-        // Music control
-        function toggleMusic() {
-            const music = document.getElementById("bgMusic");
-            if (music.paused) {
-                music.play();
-            } else {
-                music.pause();
-            }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
-        // Autoplay music with user interaction
-        document.addEventListener('click', function() {
-            const music = document.getElementById("bgMusic");
-            music.play().catch(e => console.log("Auto-play prevented"));
-        }, { once: true });
-    </script>
-</body>
-</html>
+        #countdown {
+            font-size: 2rem;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #ffeb3b;
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            background-color: #c2185b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .heart {
+            color: red;
+            font-size: 1.5rem;
+            animation: beat 1s infinite alternate;
+            display: inline-block;
+        }
+        
+        @keyframes beat {
+            to { transform: scale(1.2); }
+        }
+        
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin: 20px auto;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Our Anniversary <span class="heart">❤️</span></h1>
+        
+        <div class="photo-frame">
+            <!-- Replace with your image URL -->
+            <img src="https://i.imgur.com/your-image.jpg" alt="Our Photo">
+        </div>
+        
+        <div id="countdown"></div>
+        
+        <div class="message">
+            <p>မင်းနဲ့အတူရှိနေတဲ့အချိန်တိုင်းဟာ ကျွန်တော့်အတွက် အဖိုးတန်ဆုံးအချိန်တွေပါ...</p>
+            <p>ဒီနေ့ကစပြီး နောက်ထပ် <span id="years-together">0</span> နှစ်တိုင်တိုင် မင်းနဲ့အတူရှိချင်ပါတယ်။</p>
+        </div>
+        
+        <button class="btn" onclick="showMessage(1)">ကျွန်တော်တို့အကြောင်း</button>
+        <button class="btn" onclick="showMessage(2)">မင်းကိုဘာလို့ချစ်တာလဲ</button>
+        <button class="btn" onclick="showMessage(3)">အထူးမက်ဆေ့ဂ်</button>
+        
+        <!-- Background Music (Replace with your music file) -->
+        <audio autoplay loop id="bgMusic">
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+        
+        <button class="btn" onclick="toggleMusic()" style="margin-top: 30px;">သီချင်းပိတ်/ဖွင့်</button>
+    </div>
+
+    <script>
+        // Set your anniversary date (YYYY-MM-DD)
